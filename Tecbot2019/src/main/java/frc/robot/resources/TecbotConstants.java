@@ -25,17 +25,17 @@ public class TecbotConstants {
     public static final double ARM_EXTENSOR_DEPLOY_BALL_LOWER_ROCKET = 0.0;
     public static final double ARM_EXTENSOR_DEPLOY_BALL_MIDDLE_ROCKET = -7437.0;
     public static final double ARM_EXTENSOR_DEPLOY_BALL_UPPER_ROCKET = -35215.0;
-    public static final double ARM_EXTENSOR_DEPLOY_HATCH_LOWER_ROCKET = 2264.0;
-    public static final double ARM_EXTENSOR_DEPLOY_HATCH_MIDDLE_ROCKET = 2456.0;
-    public static final double ARM_EXTENSOR_DEPLOY_HATCH_UPPER_ROCKET = -26988.0;
+    public static final double ARM_EXTENSOR_DEPLOY_HATCH_LOWER_ROCKET = 0.0;
+    public static final double ARM_EXTENSOR_DEPLOY_HATCH_MIDDLE_ROCKET = 0.0;
+    public static final double ARM_EXTENSOR_DEPLOY_HATCH_UPPER_ROCKET = -37969.0;
     public static final double ARM_EXTENSOR_GRAB_FROM_FLOOR = -6154.0;
     public static final double ARM_EXTENSOR_TRANSPORT = 0.0;
 
 
     // Offsets
 
-    public static final double ARM_EXTENSOR_UPPER_OFFSET = 2456;
-    public static final double ARM_EXTENSOR_LOWER_OFFSET = -35215.0;
+    public static final double ARM_EXTENSOR_UPPER_OFFSET = 0;
+    public static final double ARM_EXTENSOR_LOWER_OFFSET = -37969.0;
     public static final double ARM_EXTENSOR_DIFFERENCE_OFFSET = 0;
     public static final double ARM_EXTENSOR_MAX_DISTANCE = 5000;
     public static final double ARM_EXTENSOR_ARRIVE_OFFSET = 400;
@@ -66,8 +66,8 @@ public class TecbotConstants {
     public static final double ARM_ANGLER_RIGHT_LOWER_OFFSET = -78978.0;
     public static final double ARM_ANGLER_RIGHT_UPPER_OFFSET = 137424.0;
     public static final double ARM_ANGLER_DIFFERENCE_OFFSET = 50;
-    public static final double ARM_ANGLER_MAX_DISTANCE = 3500;
-    public static final double ARM_ANGLER_ARRIVE_OFFSET = 400;
+    public static final double ARM_ANGLER_MAX_DISTANCE = 4000;
+    public static final double ARM_ANGLER_ARRIVE_OFFSET = 500;
     public static final double ARM_ANGLER_CORRECT_MAX_POWER = 0;
     public static final double ARM_ANGLER_MAX_POWER = 0.75;
 

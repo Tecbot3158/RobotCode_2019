@@ -20,8 +20,8 @@ public class DeployBallLowerRocket extends CommandGroup {
    */
   public DeployBallLowerRocket() {
     addSequential(new MoveExtensorTwoPositions(TecbotConstants.ARM_EXTENSOR_DEPLOY_BALL_LOWER_ROCKET, TecbotConstants.ARM_EXTENSOR_DEPLOY_HATCH_LOWER_ROCKET, TecbotConstants.ARM_EXTENSOR_MAX_POWER));
-    addSequential(new MoveAnglerTwoPositions(TecbotConstants.ARM_ANGLER_DEPLOY_BALL_LOWER_ROCKET, TecbotConstants.ARM_ANGLER_DEPLOY_HATCH_LOWER_ROCKET, TecbotConstants.ARM_ANGLER_MAX_POWER));
     addSequential(new MoveWristTwoPositions(TecbotConstants.ARM_WRIST_DEPLOY_BALL_LOWER_ROCKET, TecbotConstants.ARM_WRIST_DEPLOY_HATCH_LOWER_ROCKET, TecbotConstants.ARM_WRIST_MAX_POWER));
+    addSequential(new MoveAnglerTwoPositions(TecbotConstants.ARM_ANGLER_DEPLOY_BALL_LOWER_ROCKET, TecbotConstants.ARM_ANGLER_DEPLOY_HATCH_LOWER_ROCKET, TecbotConstants.ARM_ANGLER_MAX_POWER));
   }
 
 }

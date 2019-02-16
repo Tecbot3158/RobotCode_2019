@@ -28,13 +28,9 @@ public class WristManualMovement extends Command {
   protected void execute() {  
     SmartDashboard.putNumber("Left Trigger", (Robot.oi.getCopilot().getRawAxis(3)+1)/2);
     SmartDashboard.putNumber("Right Trigger", (Robot.oi.getCopilot().getRawAxis(4)+1)/2);
-    // if(Robot.oi.getPilotTriggers() > 0.1 || Robot.oi.getPilotTriggers() < -0.1){
-    //   Robot.wrist.rollerStart(-Robot.oi.getPilotTriggers());
-    // } else if(Robot.oi.getCopilotTriggers() > 0.1 || Robot.oi.getCopilotTriggers() < -0.1){
-      Robot.wrist.rollerStart(Robot.oi.getCopilotTriggers());
-    // } else {
-    //   Robot.wrist.rollerStart(0);
-    // }
+    
+    Robot.wrist.rollerStart(Robot.oi.getPilotTriggers());
+    
     Robot.wrist.moveWristTeleoperated();
   }
 
