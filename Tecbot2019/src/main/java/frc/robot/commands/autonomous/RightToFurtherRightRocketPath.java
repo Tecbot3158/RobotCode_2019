@@ -8,25 +8,15 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.Robot;
-import frc.robot.RobotMap;
 import frc.robot.commands.chassis.*;
 
-public class RocketTestGroup extends CommandGroup {
+public class RightToFurtherRightRocketPath extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public RocketTestGroup() {
-    addSequential(new ResetGyro());
-    addSequential(new MoveStraightForwardOneEncoder(0, 5.8 * RobotMap.k_meters_to_encoder));
-    addSequential(new TurnDegrees(49.0, 0.6));
-    addSequential(new MoveStraightForwardOneEncoder(49.0, 2.60 * RobotMap.k_meters_to_encoder));
-    addSequential(new ResetGyro());
-    addSequential(new TurnDegrees(95, 0.6));
-  }
+  public RightToFurtherRightRocketPath() {
 
-  public void initialize() {
-    Robot.actualCommand = this;
+    addSequential(new DescendFromRampThenAlign());
+    addSequential(new MoveAlongPath("RightToFurtherRightRocket"));
   }
-
 }

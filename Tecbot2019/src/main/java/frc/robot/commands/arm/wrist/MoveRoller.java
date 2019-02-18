@@ -13,10 +13,13 @@ import frc.robot.Robot;
 public class MoveRoller extends Command {
   double speed;
   double time;
+
   public MoveRoller(double speed, double time) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.wrist);
+    this.time = time;
+    this.speed = speed;
   }
 
   // Called just before this Command runs the first time

@@ -14,6 +14,7 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.resources.TecbotConstants;
 import frc.robot.resources.TecbotEncoder;
+
 /**
  * Add your docs here.
  */
@@ -24,6 +25,7 @@ public class DistancePIDOneEncoder extends PIDSubsystem {
   private double pivotAngle = 0;
   private double diff;
   private TecbotEncoder encoder;
+
   public DistancePIDOneEncoder(double pivotAngle, TecbotEncoder encoder) {
     // Intert a subsystem name and PID values here
     super("Distance PID One Encoder", RobotMap.straight_P, RobotMap.straight_I, RobotMap.straight_D);
@@ -46,11 +48,11 @@ public class DistancePIDOneEncoder extends PIDSubsystem {
     // Return your input value for the PID loop
     // e.g. a sensor, like a potentiometer:
     // yourPot.getAverageVoltage() / kYourMaxVoltage;
-    return encoder.getRaw();
+    return -encoder.getRaw();
   }
 
-  public double getAngleDifference(){
-    return diff = pivotAngle-Robot.tecbotgyro.getYaw();
+  public double getAngleDifference() {
+    return diff = pivotAngle - Robot.tecbotgyro.getYaw();
   }
 
   @Override

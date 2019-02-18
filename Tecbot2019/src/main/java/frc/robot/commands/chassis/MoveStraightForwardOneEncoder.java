@@ -15,6 +15,7 @@ public class MoveStraightForwardOneEncoder extends Command {
   DistancePIDOneEncoder distancePID;
   double pivotAngle, distanceToMove;
   double diff;
+
   public MoveStraightForwardOneEncoder(double pivotAngle, double distanceToMove) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -26,14 +27,14 @@ public class MoveStraightForwardOneEncoder extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.driveTrain.getRightEncoder().reset();
-    distancePID = new DistancePIDOneEncoder(pivotAngle, Robot.driveTrain.getRightEncoder());
+    Robot.driveTrain.getLeftEncoder().reset();
+    distancePID = new DistancePIDOneEncoder(pivotAngle, Robot.driveTrain.getLeftEncoder());
     distancePID.setAbsoluteTolerance(200);
     distancePID.setOutputRange(-.75, .75);
     distancePID.setInputRange(-Double.MAX_VALUE, Double.MAX_VALUE);
-    
+
     SmartDashboard.putNumber("Double Min Value", Double.MIN_VALUE);
-    SmartDashboard.putNumber("To Distance"+ this, distanceToMove);
+    SmartDashboard.putNumber("To Distance" + this, distanceToMove);
     distancePID.setSetpoint(distanceToMove);
     distancePID.enable();
   }
@@ -45,7 +46,7 @@ public class MoveStraightForwardOneEncoder extends Command {
     SmartDashboard.putNumber("Left Encoder", Robot.driveTrain.getLeftPosition());
     SmartDashboard.putNumber("Actual PID Position", distancePID.getPosition());
     SmartDashboard.putNumber("Set Point", distancePID.getSetpoint());
-    
+
   }
 
   // Make this return true when this Command no longer needs to run execute()

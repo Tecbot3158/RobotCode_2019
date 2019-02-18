@@ -14,12 +14,24 @@ import frc.robot.Robot;
 public class TurnDegrees extends Command {
   private double angle, maxPower;
   private boolean arrived = false;
+  private boolean reset;
+
   public TurnDegrees(double angle, double maxPower) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.driveTrain);
     this.angle = angle;
     this.maxPower = maxPower;
+    this.reset = false;
+  }
+
+  public TurnDegrees(double angle, double maxPower, boolean reset) {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
+    requires(Robot.driveTrain);
+    this.angle = angle;
+    this.maxPower = maxPower;
+    this.reset = reset;
   }
 
   // Called just before this Command runs the first time
@@ -46,6 +58,8 @@ public class TurnDegrees extends Command {
   @Override
   protected void end() {
     Robot.driveTrain.drive(0, 0);
+    if (reset)
+      Robot.tecbotgyro.reset();
   }
 
   // Called when another command which requires one or more of the same

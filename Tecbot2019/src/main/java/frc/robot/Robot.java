@@ -12,6 +12,7 @@ import frc.robot.subsystems.wrist.WristSubsystem;
 import frc.robot.commands.autonomous.*;
 import frc.robot.commands.chassis.*;
 import frc.robot.resources.TecbotConstants;
+import frc.robot.resources.TecbotEncoder;
 import frc.robot.resources.TecbotSpeedController;
 import frc.robot.resources.TecbotSpeedController.TypeOfMotor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -36,6 +37,7 @@ import com.ctre.phoenix.motorcontrol.Faults;
 public class Robot extends TimedRobot {
 	public static OI oi;
 
+	public static TecbotEncoder leftEncoder, rightEncoder;
 	public static Navx tecbotgyro;
 	public static DriveTrain driveTrain;
 	public static AnglerSubsystem angler;
@@ -64,9 +66,12 @@ public class Robot extends TimedRobot {
 		angler = new AnglerSubsystem();
 		extensor = new ExtensorSubsystem();
 		wrist = new WristSubsystem();
-		
+
 		driveTrain.getLeftEncoder().reset();
 		driveTrain.getRightEncoder().reset();
+
+		leftEncoder = driveTrain.getLeftEncoder();
+		rightEncoder = driveTrain.getRightEncoder();
 
 		tecbotgyro.reset();
 
@@ -78,16 +83,24 @@ public class Robot extends TimedRobot {
 
 		SmartDashboard.putData(angler);
 		SmartDashboard.putData(driveTrain);
-		// SmartDashboard.putNumber("Angler Starting Configuration", TecbotConstants.ARM_ANGLER_START_CONFIGURATION);
-		// SmartDashboard.putNumber("Extensor Starting Configuration", TecbotConstants.ARM_EXTENSOR_TRANSPORT);
-		// SmartDashboard.putNumber("Wrist Starting Configuration", TecbotConstants.ARM_WRIST_TRANSPORT);
-		// SmartDashboard.putNumber("Angler Ball Lower Rocket", TecbotConstants.ARM_ANGLER_DEPLOY_BALL_LOWER_ROCKET);
-		// SmartDashboard.putNumber("Extensor Ball Lower Rocket", TecbotConstants.ARM_EXTENSOR_DEPLOY_BALL_LOWER_ROCKET);
-		// SmartDashboard.putNumber("Wrist Ball Lower Rocket", TecbotConstants.ARM_WRIST_DEPLOY_BALL_LOWER_ROCKET);
-		// SmartDashboard.putNumber("Angler Ball Middle Rocket", TecbotConstants.ARM_ANGLER_DEPLOY_BALL_MIDDLE_ROCKET);
-		// SmartDashboard.putNumber("Extensor Ball Middle Rocket", TecbotConstants.ARM_EXTENSOR_DEPLOY_BALL_MIDDLE_ROCKET);
-		// SmartDashboard.putNumber("Wrist Ball Middle Rocket", TecbotConstants.ARM_WRIST_DEPLOY_BALL_MIDDLE_ROCKET);
-
+		// SmartDashboard.putNumber("Angler Starting Configuration",
+		// TecbotConstants.ARM_ANGLER_START_CONFIGURATION);
+		// SmartDashboard.putNumber("Extensor Starting Configuration",
+		// TecbotConstants.ARM_EXTENSOR_TRANSPORT);
+		// SmartDashboard.putNumber("Wrist Starting Configuration",
+		// TecbotConstants.ARM_WRIST_TRANSPORT);
+		// SmartDashboard.putNumber("Angler Ball Lower Rocket",
+		// TecbotConstants.ARM_ANGLER_DEPLOY_BALL_LOWER_ROCKET);
+		// SmartDashboard.putNumber("Extensor Ball Lower Rocket",
+		// TecbotConstants.ARM_EXTENSOR_DEPLOY_BALL_LOWER_ROCKET);
+		// SmartDashboard.putNumber("Wrist Ball Lower Rocket",
+		// TecbotConstants.ARM_WRIST_DEPLOY_BALL_LOWER_ROCKET);
+		// SmartDashboard.putNumber("Angler Ball Middle Rocket",
+		// TecbotConstants.ARM_ANGLER_DEPLOY_BALL_MIDDLE_ROCKET);
+		// SmartDashboard.putNumber("Extensor Ball Middle Rocket",
+		// TecbotConstants.ARM_EXTENSOR_DEPLOY_BALL_MIDDLE_ROCKET);
+		// SmartDashboard.putNumber("Wrist Ball Middle Rocket",
+		// TecbotConstants.ARM_WRIST_DEPLOY_BALL_MIDDLE_ROCKET);
 
 		oi = new OI();
 
@@ -106,6 +119,8 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		tecbotgyro.reset();
 		angler.resetEncoders();
+		leftEncoder.reset();
+		rightEncoder.reset();
 		m_autonomousCommand = m_chooser.getSelected();
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
@@ -116,7 +131,7 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		tecbotgyro.run();
-		if(oi.getPilot().getTrigger() && actualCommand != null){
+		if (oi.getPilot().getTrigger() && actualCommand != null) {
 			actualCommand.cancel();
 		}
 
@@ -147,21 +162,27 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("Angler Out Of Phase", _faults_angler.SensorOutOfPhase);
 		SmartDashboard.putBoolean("Extensor Out Of Phase", _faults_extensor.SensorOutOfPhase);
 		SmartDashboard.putBoolean("Wrist Out Of Phase", _faults_wrist.SensorOutOfPhase);
-		
-		
+
 	}
 
 	@Override
 	public void testPeriodic() {
 	}
 
-	public void chooserInit(){
-		
+	public void chooserInit() {
+
 		m_chooser.addOption("Follow Juan", new MoveAlongPath("Juan"));
-		m_chooser.addOption("Move Straight Forward Angle Pivot", new MoveStraightForwardOneEncoder(0, 2*RobotMap.k_meters_to_encoder));
-		m_chooser.addOption("Move Straight Forward Two Encoders", new MoveStraightForwardTwoEncoders(-4*RobotMap.k_meters_to_encoder));
+		m_chooser.addOption("Move Straight Forward Angle Pivot",
+				new MoveStraightForwardOneEncoder(0, 2 * RobotMap.k_meters_to_encoder));
+		m_chooser.addOption("Move Straight Forward Two Encoders",
+				new MoveStraightForwardTwoEncoders(-4 * RobotMap.k_meters_to_encoder));
 		m_chooser.addOption("Turn Degrees", new TurnDegrees(30, 0.6));
 		m_chooser.addOption("Rocket Test", new RocketTestGroup());
+		m_chooser.addOption("Right to middle cargo", new RightToMiddleCargoShip(false));
+		m_chooser.addOption("Right to middle cargo remastered", new RightToMiddleCargoRemastered());
+		m_chooser.addOption("Left to middle cargo remastered", new LeftToMiddleCargo());
+		m_chooser.addOption("Right to right SR", new RightToFurtherRocketWithSR(false));
+
 		SmartDashboard.putData("Auto mode", m_chooser);
 
 	}
