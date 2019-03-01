@@ -15,6 +15,12 @@ import frc.robot.subsystems.watcher.WatchableSubsystem.State;
 public class MoveExtensor extends Command {
   double target, maxPower;
   boolean arrived;
+
+  /**
+   * 
+   * @param target   Target
+   * @param maxPower Currently not used
+   */
   public MoveExtensor(double target, double maxPower) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -26,7 +32,8 @@ public class MoveExtensor extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    if(Robot.extensor.getState()==State.DANGER){
+    Robot.extensor.updateTarget(target);
+    if (Robot.extensor.getState() == State.DANGER) {
       this.cancel();
     }
   }
@@ -34,37 +41,29 @@ public class MoveExtensor extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    switch(Robot.angler.getState()){
-      case GOOD:
-      arrived = Robot.extensor.armExtensorMove(target, maxPower);
-      break;
-      case WARNING:
-      Robot.extensor.correct();
-      arrived = false;
-      break;
-      case DANGER:
-      this.cancel();
-      break;
-    }
+    /*
+     * switch (Robot.angler.getState()) { case GOOD: arrived =
+     * Robot.extensor.armExtensorMove(target, maxPower); break; case WARNING:
+     * Robot.extensor.correct(); arrived = false; break; case DANGER: this.cancel();
+     * break; }
+     */
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    SmartDashboard.putBoolean("Extensor Arrived", arrived);
-    return arrived;
+    SmartDashboard.putBoolean("Extensor Arrived", Robot.extensor.hasArrivedToTarget());
+    return Robot.extensor.hasArrivedToTarget();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.extensor.stop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.extensor.stop();
   }
 }

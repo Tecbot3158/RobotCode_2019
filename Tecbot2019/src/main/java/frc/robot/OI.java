@@ -15,7 +15,7 @@ import frc.robot.commands.arm.angler.ResetAnglerEncoder;
 import frc.robot.commands.arm.extensor.MoveExtensor;
 
 import frc.robot.commands.arm.extensor.ResetExtensorEncoders;
-
+import frc.robot.commands.arm.extensor.ToggleManualMovement;
 import frc.robot.commands.arm.wrist.CloseClaw;
 
 import frc.robot.commands.arm.wrist.MoveWrist;
@@ -23,7 +23,7 @@ import frc.robot.commands.arm.wrist.MoveWrist;
 import frc.robot.commands.arm.wrist.OpenClaw;
 
 import frc.robot.commands.arm.wrist.ResetWristEncoder;
-
+import frc.robot.commands.automatic.CancelCommands;
 import frc.robot.commands.automatic.DeployBallHigherRocket;
 
 import frc.robot.commands.automatic.DeployBallLowerRocket;
@@ -45,16 +45,23 @@ import frc.robot.commands.chassis.SetTransmissionOn;
 import frc.robot.commands.chassis.ToggleTransmission;
 
 import frc.robot.commands.CancelArm;
-
+import frc.robot.commands.CommandHandler;
+import frc.robot.commands.CommandHandlerStateModify;
 import frc.robot.resources.TecbotConstants;
 
 public class OI {
+
+	/**
+	 * TODO extensor a los triggers Rollers a eje x de derecha Solo cuando sea mayor
+	 * a .8 ^/ Angler a eje y derecha Solo cuando sea mayor a .8 y solo se prende en
+	 * .6 Quitar extensor de los automaticos
+	 */
 
 	public boolean ps4 = RobotMap.isUsingPS4Controller;
 
 	public Joystick pilot, copilot, tester;
 
-	public JoystickButton start, back, a, b, x, y, rt, lt, rb, lb, select, left_pilot_joystick_button;
+	public JoystickButton start, back, a, b, x, y, rt, lt, rb, lb, select, ls, rs, middleButton;
 
 	public JoystickButton a_tester, b_tester, x_tester, y_tester, rb_tester, lb_tester;
 
@@ -98,21 +105,26 @@ public class OI {
 
 		rb = new JoystickButton(pilot, 6);
 
-		left_pilot_joystick_button = new JoystickButton(pilot, 11);
+		ls = new JoystickButton(pilot, 11);
+
+		rs = new JoystickButton(pilot, 12);
 
 		select = new JoystickButton(pilot, 9);
 
 		start = new JoystickButton(pilot, 10);
 
-		select.whenPressed(new GoStartingConfiguration());
+		middleButton = new JoystickButton(pilot, 13);
 
-		start.whenPressed(new GoTransportConfiguration());
+		// start.whenPressed(new GoStartingConfiguration(true));
 
-		a.whenPressed(new DeployBallLowerRocket());
-
-		b.whenPressed(new DeployBallMiddleRocket());
-
-		y.whenPressed(new DeployBallHigherRocket());
+		// start.whenPressed(new GoTransportConfiguration());
+		start.whenPressed(new CommandHandlerStateModify(CommandHandler.STARTING_CONFIGURATION));
+		// a.whenPressed(new DeployBallLowerRocket());
+		a.whenPressed(new CommandHandlerStateModify(CommandHandler.BOTTOM_CONFIGURATION));
+		// b.whenPressed(new DeployBallMiddleRocket());
+		b.whenPressed(new CommandHandlerStateModify(CommandHandler.MIDDLE_CONFIGURATION));
+		// y.whenPressed(new DeployBallHigherRocket());
+		y.whenPressed(new CommandHandlerStateModify(CommandHandler.TOP_CONFIGURATION));
 
 		x.whenPressed(new ChangeHatchBoolean());
 
@@ -120,6 +132,11 @@ public class OI {
 
 		rb.whenPressed(new CloseClaw());
 
+		middleButton.whenPressed(new ToggleManualMovement());
+
+		ls.whenPressed(new ToggleTransmission());
+
+		rs.whenPressed(new CancelCommands());
 		// a.whenPressed(new ResetGyro());
 
 		// b.whenPressed(new MoveAngler(TecbotConstants.ARM_ANGLER_DEPLOY_HATCH_CARGO,

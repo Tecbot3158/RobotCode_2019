@@ -464,6 +464,12 @@ public class DriveTrain extends Subsystem {
 		transmissionState = false;
 	}
 
+	public void toggleTransmission() {
+		if (transmissionState)
+			transmissionOff();
+		else
+			transmissionOn();
+	}
 	// Set transmission to a desired state
 	// @Param state is for enabling the transmission on a desired state
 

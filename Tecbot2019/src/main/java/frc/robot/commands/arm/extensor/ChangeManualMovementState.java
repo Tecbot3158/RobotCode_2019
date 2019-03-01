@@ -7,45 +7,36 @@
 
 package frc.robot.commands.arm.extensor;
 
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ManualMovementExtensor extends Command {
+public class ChangeManualMovementState extends Command {
+  boolean state;
 
-  public ManualMovementExtensor() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.extensor);
+  public ChangeManualMovementState(boolean state) {
+    this.state = state;
   }
 
-  // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.extensor.setOnManualMovement(state);
+
   }
 
-  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.extensor.moveExtensorTeleoperated();
   }
 
-  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     return false;
   }
 
-  // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.oi.copilot.setRumble(RumbleType.kLeftRumble, 0);
   }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.oi.copilot.setRumble(RumbleType.kLeftRumble, 0);
   }
 }

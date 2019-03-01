@@ -15,13 +15,31 @@ import frc.robot.commands.arm.extensor.MoveExtensorTwoPositions;
 import frc.robot.commands.arm.wrist.MoveWristTwoPositions;
 
 public class DeployBallLowerRocket extends CommandGroup {
-  /**
-   * Add your docs here.
-   */
-  public DeployBallLowerRocket() {
-    addSequential(new MoveExtensorTwoPositions(TecbotConstants.ARM_EXTENSOR_DEPLOY_BALL_LOWER_ROCKET, TecbotConstants.ARM_EXTENSOR_DEPLOY_HATCH_LOWER_ROCKET, TecbotConstants.ARM_EXTENSOR_MAX_POWER));
-    addSequential(new MoveWristTwoPositions(TecbotConstants.ARM_WRIST_DEPLOY_BALL_LOWER_ROCKET, TecbotConstants.ARM_WRIST_DEPLOY_HATCH_LOWER_ROCKET, TecbotConstants.ARM_WRIST_MAX_POWER));
-    addSequential(new MoveAnglerTwoPositions(TecbotConstants.ARM_ANGLER_DEPLOY_BALL_LOWER_ROCKET, TecbotConstants.ARM_ANGLER_DEPLOY_HATCH_LOWER_ROCKET, TecbotConstants.ARM_ANGLER_MAX_POWER));
-  }
+    /**
+     * Add your docs here.
+     */
+    public DeployBallLowerRocket(boolean movingUpwards) {
+
+        if (movingUpwards) {
+            addSequential(new MoveAnglerTwoPositions(TecbotConstants.ARM_ANGLER_DEPLOY_BALL_LOWER_ROCKET,
+                    TecbotConstants.ARM_ANGLER_DEPLOY_HATCH_LOWER_ROCKET, TecbotConstants.ARM_ANGLER_MAX_POWER));
+            // addSequential(new
+            // MoveExtensorTwoPositions(TecbotConstants.ARM_EXTENSOR_DEPLOY_BALL_LOWER_ROCKET,
+            // TecbotConstants.ARM_EXTENSOR_DEPLOY_HATCH_LOWER_ROCKET,
+            // TecbotConstants.ARM_EXTENSOR_MAX_POWER));
+            addSequential(new MoveWristTwoPositions(TecbotConstants.ARM_WRIST_DEPLOY_BALL_LOWER_ROCKET,
+                    TecbotConstants.ARM_WRIST_DEPLOY_HATCH_LOWER_ROCKET, TecbotConstants.ARM_WRIST_MAX_POWER));
+        } else {
+            addSequential(new MoveWristTwoPositions(TecbotConstants.ARM_WRIST_DEPLOY_BALL_LOWER_ROCKET,
+                    TecbotConstants.ARM_WRIST_DEPLOY_HATCH_LOWER_ROCKET, TecbotConstants.ARM_WRIST_MAX_POWER));
+            // addSequential(new
+            // MoveExtensorTwoPositions(TecbotConstants.ARM_EXTENSOR_DEPLOY_BALL_LOWER_ROCKET,
+            // TecbotConstants.ARM_EXTENSOR_DEPLOY_HATCH_LOWER_ROCKET,
+            // TecbotConstants.ARM_EXTENSOR_MAX_POWER));
+            addSequential(new MoveAnglerTwoPositions(TecbotConstants.ARM_ANGLER_DEPLOY_BALL_LOWER_ROCKET,
+                    TecbotConstants.ARM_ANGLER_DEPLOY_HATCH_LOWER_ROCKET, TecbotConstants.ARM_ANGLER_MAX_POWER));
+
+        }
+    }
 
 }

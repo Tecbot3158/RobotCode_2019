@@ -87,6 +87,8 @@ public static float straight_Tolerance = 10;
 
 	// Arm
 	public static final int ANGLER_MOTOR_PORT = 12;
+	//PWM Motor
+	public static final int ANGLER_MOTOR_PORT2 = 0;
 	public static final int ANGLER_LEFT_ENCODER_PORTS[] = {4, 5};
 	public static final int ANGLER_RIGHT_ENCODER_PORTS[] = {6, 7};
 	
@@ -112,6 +114,6 @@ public static float straight_Tolerance = 10;
 
 	public static final int CLAW_UNITS_PER_LEVEL = 1000; // EXAMPLE
 
-	public static boolean isUsingPS4Controller = false;
+	public static boolean isUsingPS4Controller = true;
 
 }

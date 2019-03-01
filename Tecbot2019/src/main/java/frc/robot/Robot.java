@@ -9,14 +9,20 @@ package frc.robot;
 
 import frc.robot.subsystems.watcher.WatcherSubsystem;
 import frc.robot.subsystems.wrist.WristSubsystem;
+import frc.robot.commands.CommandHandler;
+import frc.robot.commands.automatic.CancelCommands;
+import frc.robot.commands.automatic.GrabFromFloor;
 import frc.robot.commands.autonomous.*;
 import frc.robot.commands.chassis.*;
 import frc.robot.resources.TecbotConstants;
 import frc.robot.resources.TecbotEncoder;
 import frc.robot.resources.TecbotSpeedController;
 import frc.robot.resources.TecbotSpeedController.TypeOfMotor;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -104,11 +110,17 @@ public class Robot extends TimedRobot {
 
 		oi = new OI();
 
+		// very important line of code!!!!
+		CommandHandler.setConfiguration();
+
+		CameraServer.getInstance().startAutomaticCapture();
 	}
 
 	@Override
 	public void disabledInit() {
-
+		Robot.oi.getCopilot().setRumble(RumbleType.kRightRumble, 0);
+		Robot.oi.getCopilot().setRumble(RumbleType.kLeftRumble, 0);
+		new CancelCommands().start();
 	}
 
 	@Override
@@ -142,6 +154,7 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		extensor.setOnManualMovement(false);
 	}
 
 	@Override
@@ -162,6 +175,18 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("Angler Out Of Phase", _faults_angler.SensorOutOfPhase);
 		SmartDashboard.putBoolean("Extensor Out Of Phase", _faults_extensor.SensorOutOfPhase);
 		SmartDashboard.putBoolean("Wrist Out Of Phase", _faults_wrist.SensorOutOfPhase);
+		SmartDashboard.putBoolean("Extender Manual Movement", extensor.isOnManualMovement());
+		SmartDashboard.putBoolean("Extensor Arrived Remaster", extensor.hasArrivedToTarget());
+
+		if (oi.getPilot().getPOV() == 180) {
+			CommandHandler.goToState(CommandHandler.GRAB_CONFIGURATION);
+		}
+		if (oi.getPilot().getPOV() == 270) {
+			CommandHandler.goToState(CommandHandler.FEEDER_CONFIGURATION);
+		}
+		if (oi.getPilot().getRawButton(12)) {
+			new CancelCommands().start();
+		}
 
 	}
 
@@ -171,17 +196,12 @@ public class Robot extends TimedRobot {
 
 	public void chooserInit() {
 
-		m_chooser.addOption("Follow Juan", new MoveAlongPath("Juan"));
 		m_chooser.addOption("Move Straight Forward Angle Pivot",
 				new MoveStraightForwardOneEncoder(0, 2 * RobotMap.k_meters_to_encoder));
-		m_chooser.addOption("Move Straight Forward Two Encoders",
-				new MoveStraightForwardTwoEncoders(-4 * RobotMap.k_meters_to_encoder));
-		m_chooser.addOption("Turn Degrees", new TurnDegrees(30, 0.6));
-		m_chooser.addOption("Rocket Test", new RocketTestGroup());
-		m_chooser.addOption("Right to middle cargo", new RightToMiddleCargoShip(false));
 		m_chooser.addOption("Right to middle cargo remastered", new RightToMiddleCargoRemastered());
 		m_chooser.addOption("Left to middle cargo remastered", new LeftToMiddleCargo());
-		m_chooser.addOption("Right to right SR", new RightToFurtherRocketWithSR(false));
+		m_chooser.addOption("TwoCargoRight", new TwoCargoAutoRight());
+		m_chooser.addOption("TwoCargoLeft", new TwoCargoAutoLeft());
 
 		SmartDashboard.putData("Auto mode", m_chooser);
 

@@ -7,10 +7,12 @@
 
 package frc.robot.commands.arm;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class ManualMovement extends Command {
+
   public ManualMovement() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -37,11 +39,13 @@ public class ManualMovement extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.oi.getCopilot().setRumble(RumbleType.kRightRumble, 0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.oi.getCopilot().setRumble(RumbleType.kRightRumble, 0);
   }
 }

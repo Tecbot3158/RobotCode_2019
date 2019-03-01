@@ -5,52 +5,43 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.arm.wrist;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Robot;
 
-public class WristManualMovement extends Command {
-  public WristManualMovement() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.wrist);
+public class CommandHandlerStateModify extends Command {
+
+  int state;
+
+  public CommandHandlerStateModify(int commandHandlerState) {
+    state = commandHandlerState;
+
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    CommandHandler.goToState(state);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    SmartDashboard.putNumber("Left Trigger", (Robot.oi.getCopilot().getRawAxis(3) + 1) / 2);
-    SmartDashboard.putNumber("Right Trigger", (Robot.oi.getCopilot().getRawAxis(4) + 1) / 2);
-
-    if (Math.abs(Robot.oi.pilot.getRawAxis(2)) > .8f)
-      Robot.wrist.rollerStart(Robot.oi.pilot.getRawAxis(2));
-
-    Robot.wrist.moveWristTeleoperated();
   }
 
-  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.wrist.stopRoller();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.wrist.stopRoller();
   }
 }

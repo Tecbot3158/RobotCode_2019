@@ -7,13 +7,11 @@
 
 package frc.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.arm.wrist.MoveRoller;
 import frc.robot.commands.chassis.MoveDistanceWithSpeedReduction;
 import frc.robot.commands.chassis.MoveForwardTimed;
 import frc.robot.commands.chassis.TurnDegrees;
-import frc.robot.commands.chassis.TurnToAngleWithSpeedReduction;
 
 public class RightToMiddleCargoShip extends CommandGroup {
   /**

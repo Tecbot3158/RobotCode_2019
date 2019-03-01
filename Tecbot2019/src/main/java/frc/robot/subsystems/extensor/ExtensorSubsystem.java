@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems.extensor;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.resources.RobotConfigurator;
@@ -19,13 +20,14 @@ import frc.robot.Robot;
 import frc.robot.RobotConfiguration;
 import frc.robot.RobotMap;
 import frc.robot.commands.arm.ManualMovement;
+import frc.robot.commands.arm.extensor.ExtensorMovement;
 import frc.robot.commands.arm.extensor.ManualMovementExtensor;
 import frc.robot.subsystems.watcher.WatchableSubsystem;
 
 /**
  * Add your docs here.
  */
-public class ExtensorSubsystem extends Subsystem implements WatchableSubsystem{
+public class ExtensorSubsystem extends Subsystem implements WatchableSubsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
@@ -34,8 +36,11 @@ public class ExtensorSubsystem extends Subsystem implements WatchableSubsystem{
   private TecbotSpeedController leftMotor, rightMotor;
   private int warnTimer;
   private boolean hatch = false;
+  private double currentTarget = 0;
+  private boolean isOnManualMovement;
+  private boolean arrivedToTarget;
 
-  public ExtensorSubsystem(){
+  public ExtensorSubsystem() {
 
     // Motors
 
@@ -44,7 +49,8 @@ public class ExtensorSubsystem extends Subsystem implements WatchableSubsystem{
 
     // Encoders
 
-    encoder = RobotConfigurator.buildEncoder(leftMotor, RobotConfigurator.CONFIG_NOT_SET, RobotConfigurator.CONFIG_NOT_SET);
+    encoder = RobotConfigurator.buildEncoder(leftMotor, RobotConfigurator.CONFIG_NOT_SET,
+        RobotConfigurator.CONFIG_NOT_SET);
     encoder.doDefaultSRXConfig();
 
     this.setName("Extensor");
@@ -52,44 +58,73 @@ public class ExtensorSubsystem extends Subsystem implements WatchableSubsystem{
   }
 
   /**
+   * @return the arrivedToTarget
+   */
+  public boolean hasArrivedToTarget() {
+    return arrivedToTarget;
+  }
+
+  /**
+   * @param arrivedToTarget the arrivedToTarget to set
+   */
+  public void setArrivedToTarget(boolean arrivedToTarget) {
+    this.arrivedToTarget = arrivedToTarget;
+  }
+
+  /**
+   * @return the isOnManualMovement
+   */
+  public boolean isOnManualMovement() {
+    return isOnManualMovement;
+  }
+
+  /**
+   * @param isOnManualMovement the isOnManualMovement to set
+   */
+  public void setOnManualMovement(boolean isOnManualMovement) {
+    this.isOnManualMovement = isOnManualMovement;
+  }
+
+  /**
    * Move the extensor to a target position
-   * @param target Target position of the extensor
+   * 
+   * @param target   Target position of the extensor
    * @param maxPower Max power that can be applied by the method
    * @return Boolean that tells you if the extensor arrived
    * 
    */
 
-  public boolean armExtensorMove(double target, double maxPower){
+  public boolean armExtensorMove(double target, double maxPower) {
 
     SmartDashboard.putNumber("Extensor Target", target);
+    SmartDashboard.putNumber("Current Extensor Target", currentTarget);
 
     maxPower = Math.clamp(maxPower, 0, 1);
-    target = Math.clamp(target, TecbotConstants.ARM_EXTENSOR_LOWER_OFFSET, 
-                              TecbotConstants.ARM_EXTENSOR_UPPER_OFFSET);
+    target = Math.clamp(target, TecbotConstants.ARM_EXTENSOR_LOWER_OFFSET, TecbotConstants.ARM_EXTENSOR_UPPER_OFFSET);
 
     SmartDashboard.putNumber("Extensor Clamped Target", target);
 
-    double distance =  getPosition() - target;
+    double distance = getPosition() - target;
 
     SmartDashboard.putNumber("Extensor Distance", distance);
 
-    double power = Math.clamp(distance/TecbotConstants.ARM_EXTENSOR_MAX_DISTANCE, -maxPower, maxPower);
-    
+    double power = Math.clamp(distance / TecbotConstants.ARM_EXTENSOR_MAX_DISTANCE, -maxPower, maxPower);
+
     SmartDashboard.putNumber("Extensor Power", power);
 
     double absDistance = Math.abs(distance);
 
-    
-
-    if(absDistance >= TecbotConstants.ARM_EXTENSOR_ARRIVE_OFFSET){
+    if (absDistance >= TecbotConstants.ARM_EXTENSOR_ARRIVE_OFFSET) {
       leftMotor.set(power);
       rightMotor.set(-power);
     }
 
-    if(absDistance < TecbotConstants.ARM_EXTENSOR_ARRIVE_OFFSET){
+    if (absDistance < TecbotConstants.ARM_EXTENSOR_ARRIVE_OFFSET) {
+      arrivedToTarget = true;
       return true;
     }
 
+    arrivedToTarget = false;
     return false;
   }
 
@@ -97,26 +132,31 @@ public class ExtensorSubsystem extends Subsystem implements WatchableSubsystem{
    * Move extensor teleoperated, floor included :)
    */
 
-  public void moveExtensorTeleoperated(){
-    //double s = Robot.oi.getCopilotTriggers() * 10;
+  public void moveExtensorTeleoperated() {
+    // double s = Robot.oi.getCopilotTriggers() * 10;
     SmartDashboard.putNumber("POV", Robot.oi.getCopilot().getPOV());
-		//s = (java.lang.Math.floor(s))/10;
-		//leftMotor.set(s);
-    //rightMotor.set(-s);
+    // s = (java.lang.Math.floor(s))/10;
+    // leftMotor.set(s);
+    // rightMotor.set(-s);
     // if(Robot.oi.getPilot().getPOV() == 90){
-    //   leftMotor.set(0.6);
-    //   rightMotor.set(-0.6);
+    // leftMotor.set(0.6);
+    // rightMotor.set(-0.6);
     // } else if(Robot.oi.getPilot().getPOV() == 270){
-    //   leftMotor.set(-0.6);
-    //   rightMotor.set(0.6);
+    // leftMotor.set(-0.6);
+    // rightMotor.set(0.6);
     // } else {
-    //   leftMotor.set(0);
-    //   rightMotor.set(0);
+    // leftMotor.set(0);
+    // rightMotor.set(0);
     // }
-      double s = Math.deadZone(Robot.oi.getCopilot().getRawAxis(5), 0.2);
-      leftMotor.set(-s);
-      rightMotor.set(s);
-    
+    double s = Math.deadZone(Robot.oi.getCopilot().getRawAxis(5), 0.2) + Robot.oi.getPilotTriggers();
+    leftMotor.set(-s);
+    rightMotor.set(s);
+    if (encoder.getRaw() > TecbotConstants.RUMBLE_EXTENDER_ENCODER_VALUE) {
+    }
+    // Robot.oi.getCopilot().setRumble(RumbleType.kRightRumble, 1);
+    else {
+    }
+    // Robot.oi.getCopilot().setRumble(RumbleType.kRightRumble, 0);
 
   }
 
@@ -124,15 +164,15 @@ public class ExtensorSubsystem extends Subsystem implements WatchableSubsystem{
    * SmartDashboard print encoders
    */
 
-  public void printEncodersSmartDashboard(){
+  public void printEncodersSmartDashboard() {
     SmartDashboard.putNumber("Extensor Encoder", encoder.getRaw());
   }
 
-  public void changeHatchBoolean(){
+  public void changeHatchBoolean() {
     hatch = !hatch;
   }
-  
-  public boolean getHatchBoolean(){
+
+  public boolean getHatchBoolean() {
     return hatch;
   }
 
@@ -140,7 +180,7 @@ public class ExtensorSubsystem extends Subsystem implements WatchableSubsystem{
    * Reset the extensor encoders
    */
 
-  public void resetEncoders(){
+  public void resetEncoders() {
     encoder.reset();
   }
 
@@ -148,13 +188,14 @@ public class ExtensorSubsystem extends Subsystem implements WatchableSubsystem{
    * Try to correct the extensor
    */
 
-  public void extensorCorrect(){
+  public void extensorCorrect() {
     // double leftExtensorPosition = getLeftPosition();
     // double rightExtensorPosition = getRightPosition();
 
     // double middlePosition = (leftExtensorPosition + rightExtensorPosition)/2.0;
 
-    // armExtensorMove(middlePosition, TecbotConstants.ARM_EXTENSOR_CORRECT_MAX_POWER);
+    // armExtensorMove(middlePosition,
+    // TecbotConstants.ARM_EXTENSOR_CORRECT_MAX_POWER);
 
   }
 
@@ -163,7 +204,7 @@ public class ExtensorSubsystem extends Subsystem implements WatchableSubsystem{
    */
 
   @Override
-  public void check(){
+  public void check() {
 
   }
 
@@ -172,7 +213,7 @@ public class ExtensorSubsystem extends Subsystem implements WatchableSubsystem{
    */
 
   @Override
-  public void correct(){
+  public void correct() {
 
   }
 
@@ -180,7 +221,7 @@ public class ExtensorSubsystem extends Subsystem implements WatchableSubsystem{
    * Set good state in the subsystem
    */
 
-  public void setGood(){
+  public void setGood() {
     this.state = State.GOOD;
   }
 
@@ -188,7 +229,7 @@ public class ExtensorSubsystem extends Subsystem implements WatchableSubsystem{
    * Set warning state in the subsytem
    */
 
-  public void setWarning(){
+  public void setWarning() {
     this.state = State.WARNING;
   }
 
@@ -197,7 +238,7 @@ public class ExtensorSubsystem extends Subsystem implements WatchableSubsystem{
    */
 
   @Override
-  public void setDisabled(){
+  public void setDisabled() {
     this.state = State.DANGER;
   }
 
@@ -206,7 +247,7 @@ public class ExtensorSubsystem extends Subsystem implements WatchableSubsystem{
    */
 
   @Override
-  public State getState(){
+  public State getState() {
     return state;
   }
 
@@ -215,51 +256,62 @@ public class ExtensorSubsystem extends Subsystem implements WatchableSubsystem{
    */
 
   @Override
-  public String getSubsystemName(){
+  public String getSubsystemName() {
     return this.getName();
   }
-  
+
   /**
    * Full stop to the subsystem
    */
-  
-  public void stop(){
+
+  public void stop() {
     leftMotor.set(0);
     rightMotor.set(0);
   }
 
   /**
    * Gives you the raw position of the extensor encoder
+   * 
    * @return Raw position of the extensor encoder
    */
 
-  public double getPosition(){
+  public double getPosition() {
     return encoder.getRaw();
   }
 
-
   /**
    * Return the extensor left motor
+   * 
    * @return extensor left motor
    */
-    
-  public TecbotSpeedController getLeftMotor(){
+
+  public TecbotSpeedController getLeftMotor() {
     return leftMotor;
   }
 
   /**
    * Return the extensor right motor
+   * 
    * @return extensor right motor
    */
 
-  public TecbotSpeedController getRightMotor(){
+  public TecbotSpeedController getRightMotor() {
     return rightMotor;
+  }
+
+  public void updateTarget(double target) {
+
+    currentTarget = target;
+  }
+
+  public void keepOnTarget() {
+    armExtensorMove(currentTarget, TecbotConstants.ARM_EXTENSOR_MAX_POWER);
   }
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
-    setDefaultCommand(new ManualMovementExtensor());
+    setDefaultCommand(new ExtensorMovement());
   }
 }

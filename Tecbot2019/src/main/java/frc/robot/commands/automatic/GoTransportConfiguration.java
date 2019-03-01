@@ -14,12 +14,28 @@ import frc.robot.commands.arm.wrist.MoveWristTwoPositions;
 import frc.robot.resources.TecbotConstants;
 
 public class GoTransportConfiguration extends CommandGroup {
-  /**
-   * Add your docs here.
-   */
-  public GoTransportConfiguration() {
-    addSequential(new MoveExtensorTwoPositions(TecbotConstants.ARM_EXTENSOR_TRANSPORT, TecbotConstants.ARM_EXTENSOR_TRANSPORT, TecbotConstants.ARM_EXTENSOR_MAX_POWER));
-    addSequential(new MoveAnglerTwoPositions(TecbotConstants.ARM_ANGLER_TRANSPORT, TecbotConstants.ARM_ANGLER_TRANSPORT, TecbotConstants.ARM_ANGLER_MAX_POWER));
-    addSequential(new MoveWristTwoPositions(TecbotConstants.ARM_WRIST_TRANSPORT, TecbotConstants.ARM_WRIST_TRANSPORT, TecbotConstants.ARM_WRIST_MAX_POWER));
-  }
+    /**
+     * Add your docs here.
+     */
+    public GoTransportConfiguration(boolean movingUpwards) {
+        if (movingUpwards) {
+            addSequential(new MoveAnglerTwoPositions(TecbotConstants.ARM_ANGLER_START_CONFIGURATION,
+                    TecbotConstants.ARM_ANGLER_START_CONFIGURATION, TecbotConstants.ARM_ANGLER_MAX_POWER));
+            // addSequential(new
+            // MoveExtensorTwoPositions(TecbotConstants.ARM_EXTENSOR_TRANSPORT,
+            // TecbotConstants.ARM_EXTENSOR_TRANSPORT,
+            // TecbotConstants.ARM_EXTENSOR_MAX_POWER));
+            addSequential(new MoveWristTwoPositions(TecbotConstants.ARM_WRIST_TRANSPORT,
+                    TecbotConstants.ARM_WRIST_TRANSPORT, TecbotConstants.ARM_WRIST_MAX_POWER));
+        } else {
+            addSequential(new MoveWristTwoPositions(TecbotConstants.ARM_WRIST_TRANSPORT,
+                    TecbotConstants.ARM_WRIST_TRANSPORT, TecbotConstants.ARM_WRIST_MAX_POWER));
+            // addSequential(new
+            // MoveExtensorTwoPositions(TecbotConstants.ARM_EXTENSOR_TRANSPORT,
+            // TecbotConstants.ARM_EXTENSOR_TRANSPORT,
+            // TecbotConstants.ARM_EXTENSOR_MAX_POWER));
+            addSequential(new MoveAnglerTwoPositions(TecbotConstants.ARM_ANGLER_START_CONFIGURATION,
+                    TecbotConstants.ARM_ANGLER_START_CONFIGURATION, TecbotConstants.ARM_ANGLER_MAX_POWER));
+        }
+    }
 }
