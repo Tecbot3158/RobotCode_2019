@@ -148,7 +148,7 @@ public class ExtensorSubsystem extends Subsystem implements WatchableSubsystem {
     // leftMotor.set(0);
     // rightMotor.set(0);
     // }
-    double s = Math.deadZone(Robot.oi.getCopilot().getRawAxis(5), 0.2) + Robot.oi.getPilotTriggers();
+    double s = Math.deadZone(Robot.oi.getCopilot().getRawAxis(5), 0.2) - Robot.oi.getPilotTriggers();
     leftMotor.set(-s);
     rightMotor.set(s);
     if (encoder.getRaw() > TecbotConstants.RUMBLE_EXTENDER_ENCODER_VALUE) {

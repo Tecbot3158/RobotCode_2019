@@ -8,27 +8,49 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.RobotMap;
+import frc.robot.commands.arm.angler.MoveAnglerTwoPositions;
+import frc.robot.commands.arm.extensor.MoveExtensorTwoPositions;
+import frc.robot.commands.arm.wrist.CloseClaw;
+import frc.robot.commands.arm.wrist.MoveRoller;
+import frc.robot.commands.arm.wrist.MoveWristTwoPositions;
+import frc.robot.commands.chassis.MoveStraightForwardOneEncoder;
+import frc.robot.commands.chassis.ResetGyro;
+import frc.robot.commands.chassis.TurnDegrees;
+import frc.robot.resources.TecbotConstants;
 
 public class TwoCargoAutoLeft extends CommandGroup {
-  /**
-   * Add your docs here.
-   */
-  public TwoCargoAutoLeft() {
-    // Add Commands here:
-    // e.g. addSequential(new Command1());
-    // addSequential(new Command2());
-    // these will run in order.
+    /**
+     * Add your docs here.
+     */
+    public TwoCargoAutoLeft() {
+        addSequential(new ResetGyro());
+        addSequential(new MoveStraightForwardOneEncoder(1, -7.7f * RobotMap.k_meters_to_encoder));
+        addSequential(new TurnDegrees(-60, 0.75));
+        addSequential(new MoveRoller(-1, .6f));
+        addSequential(new TurnDegrees(0, 0.75));
+        addSequential(new MoveStraightForwardOneEncoder(-5, 6 * RobotMap.k_meters_to_encoder));
 
-    // To run multiple commands at the same time,
-    // use addParallel()
-    // e.g. addParallel(new Command1());
-    // addSequential(new Command2());
-    // Command1 and Command2 will run in parallel.
+        addSequential(new CloseClaw());
+        addSequential(new MoveWristTwoPositions(TecbotConstants.ARM_WRIST_GRAB_BALL_FLOOR,
+                TecbotConstants.ARM_WRIST_GRAB_BALL_FLOOR, TecbotConstants.ARM_WRIST_MAX_POWER));
+        addSequential(new MoveExtensorTwoPositions(TecbotConstants.ARM_EXTENSOR_GRAB_FROM_FLOOR,
+                TecbotConstants.ARM_EXTENSOR_GRAB_FROM_FLOOR, TecbotConstants.ARM_EXTENSOR_MAX_POWER));
+        addSequential(new MoveAnglerTwoPositions(TecbotConstants.ARM_ANGLER_GRAB_FROM_FLOOR,
+                TecbotConstants.ARM_ANGLER_GRAB_FROM_FLOOR, TecbotConstants.ARM_ANGLER_MAX_POWER));
 
-    // A command group will require all of the subsystems that each member
-    // would require.
-    // e.g. if Command1 requires chassis, and Command2 requires arm,
-    // a CommandGroup containing them would require both the chassis and the
-    // arm.
-  }
+        addSequential(new MoveRoller(.5, .5f));
+
+        addSequential(new MoveAnglerTwoPositions(TecbotConstants.ARM_ANGLER_START_CONFIGURATION,
+                TecbotConstants.ARM_ANGLER_START_CONFIGURATION, TecbotConstants.ARM_ANGLER_MAX_POWER));
+        addSequential(new MoveExtensorTwoPositions(TecbotConstants.ARM_EXTENSOR_TRANSPORT,
+                TecbotConstants.ARM_EXTENSOR_TRANSPORT, TecbotConstants.ARM_EXTENSOR_MAX_POWER));
+        addSequential(new MoveWristTwoPositions(TecbotConstants.ARM_WRIST_TRANSPORT,
+                TecbotConstants.ARM_WRIST_TRANSPORT, TecbotConstants.ARM_WRIST_MAX_POWER));
+
+        addSequential(new MoveStraightForwardOneEncoder(25, -2 * RobotMap.k_meters_to_encoder));
+        addSequential(new TurnDegrees(-180, .75f));
+
+        addSequential(new MoveRoller(-1, 1));
+    }
 }

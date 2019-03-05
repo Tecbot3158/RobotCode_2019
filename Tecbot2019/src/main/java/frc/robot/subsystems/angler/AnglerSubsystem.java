@@ -182,11 +182,12 @@ public class AnglerSubsystem extends Subsystem implements WatchableSubsystem {
     // Robot.oi.getCopilot().getRawAxis(1) < -0.1){
 
     double s = Math.deadZone(Robot.oi.getCopilot().getRawAxis(1), 0.2);
-    if (Robot.oi.pilot.getRawAxis(5) > .8)
-      s = .6;
-    if (Robot.oi.pilot.getRawAxis(5) < -.8)
-      s = -.6;
+    if (Robot.oi.pilot.getRawAxis(2) > .8)
+      s = .4;
+    if (Robot.oi.pilot.getRawAxis(2) < -.8)
+      s = -.4;
     setMotorPower(s);
+    SmartDashboard.putNumber("angler power", s);
 
   }
 

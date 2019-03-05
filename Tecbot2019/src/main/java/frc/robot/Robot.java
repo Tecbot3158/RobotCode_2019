@@ -30,6 +30,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.chassis.DriveTrain;
 import frc.robot.subsystems.extensor.ExtensorSubsystem;
+import frc.robot.subsystems.tilt.TiltSubsystem;
 import frc.robot.subsystems.angler.AnglerSubsystem;
 import com.ctre.phoenix.motorcontrol.Faults;
 
@@ -49,6 +50,7 @@ public class Robot extends TimedRobot {
 	public static AnglerSubsystem angler;
 	public static ExtensorSubsystem extensor;
 	public static WristSubsystem wrist;
+	public static TiltSubsystem tilt;
 	public static Command actualCommand;
 	DoubleSolenoid a, b;
 
@@ -72,6 +74,7 @@ public class Robot extends TimedRobot {
 		angler = new AnglerSubsystem();
 		extensor = new ExtensorSubsystem();
 		wrist = new WristSubsystem();
+		tilt = new TiltSubsystem();
 
 		driveTrain.getLeftEncoder().reset();
 		driveTrain.getRightEncoder().reset();
@@ -177,6 +180,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("Wrist Out Of Phase", _faults_wrist.SensorOutOfPhase);
 		SmartDashboard.putBoolean("Extender Manual Movement", extensor.isOnManualMovement());
 		SmartDashboard.putBoolean("Extensor Arrived Remaster", extensor.hasArrivedToTarget());
+		SmartDashboard.putBoolean("Hatch Mode", wrist.getHatchBoolean());
 
 		if (oi.getPilot().getPOV() == 180) {
 			CommandHandler.goToState(CommandHandler.GRAB_CONFIGURATION);

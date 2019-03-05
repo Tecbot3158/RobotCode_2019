@@ -55,11 +55,11 @@ public class TecbotConstants {
     public static final double ARM_ANGLER_DEPLOY_HATCH_CARGO = -1000;
     public static final double ARM_ANGLER_DEPLOY_BALL_LOWER_ROCKET = 125627.0;
     public static final double ARM_ANGLER_DEPLOY_BALL_MIDDLE_ROCKET = -5501.0;
-    public static final double ARM_ANGLER_DEPLOY_BALL_UPPER_ROCKET = -61100.0;
-    public static final double ARM_ANGLER_DEPLOY_HATCH_LOWER_ROCKET = 193243.0;
+    public static final double ARM_ANGLER_DEPLOY_BALL_UPPER_ROCKET = -30000.0;
+    public static final double ARM_ANGLER_DEPLOY_HATCH_LOWER_ROCKET = 170039.0;
     public static final double ARM_ANGLER_DEPLOY_HATCH_MIDDLE_ROCKET = -32458;
     public static final double ARM_ANGLER_DEPLOY_HATCH_UPPER_ROCKET = -58667.0;
-    public static final double ARM_ANGLER_GRAB_FROM_FLOOR = 210197.0;
+    public static final double ARM_ANGLER_GRAB_FROM_FLOOR = 210000.0;
     public static final double ARM_ANGLER_START_CONFIGURATION = 0.0;
     public static final double ARM_ANGLER_TRANSPORT = 0.0;
     public static final double ARM_ANGLER_GRAB_FROM_FEEDER = 53452.0;
@@ -67,12 +67,12 @@ public class TecbotConstants {
     // Offsets
 
     public static final double ARM_ANGLER_LEFT_LOWER_OFFSET = -61100.0;
-    public static final double ARM_ANGLER_LEFT_UPPER_OFFSET = 210197.0;
+    public static final double ARM_ANGLER_LEFT_UPPER_OFFSET = 219687.0;
     public static final double ARM_ANGLER_RIGHT_LOWER_OFFSET = -78978.0;
     public static final double ARM_ANGLER_RIGHT_UPPER_OFFSET = 137424.0;
     public static final double ARM_ANGLER_DIFFERENCE_OFFSET = 50;
-    public static final double ARM_ANGLER_MAX_DISTANCE = 2000;
-    public static final double ARM_ANGLER_ARRIVE_OFFSET = 500;
+    public static final double ARM_ANGLER_MAX_DISTANCE = 20000;
+    public static final double ARM_ANGLER_ARRIVE_OFFSET = 1000;
     public static final double ARM_ANGLER_CORRECT_MAX_POWER = 0;
     public static final double ARM_ANGLER_MAX_POWER = 0.75;
 
@@ -83,25 +83,25 @@ public class TecbotConstants {
     // Positions
 
     public static final double ARM_WRIST_TRANSPORT = 0.0;
-    public static final double ARM_WRIST_DEPLOY_HATCH_LOWER_ROCKET = 4069.0;
+    public static final double ARM_WRIST_DEPLOY_HATCH_LOWER_ROCKET = 3787.0;
     public static final double ARM_WRIST_DEPLOY_BALL_LOWER_ROCKET = 1307.0;
 
     public static final double ARM_WRIST_DEPLOY_BALL_MIDDLE_ROCKET = 629.0;
     public static final double ARM_WRIST_DEPLOY_HATCH_MIDDLE_ROCKET = 2408.0;
 
-    public static final double ARM_WRIST_DEPLOY_BALL_UPPER_ROCKET = 737.0;
+    public static final double ARM_WRIST_DEPLOY_BALL_UPPER_ROCKET = 842.0;
     public static final double ARM_WRIST_DEPLOY_HATCH_UPPER_ROCKET = 2162.0;
 
     public static final double ARM_WRIST_BOTTOM_BALL_POSITION = 910.0;
     public static final double ARM_WRIST_BOTTOM_HATCH_POSITION = 2575.0;
-    public static final double ARM_WRIST_GRAB_BALL_FLOOR = 420.0;
+    public static final double ARM_WRIST_GRAB_BALL_FLOOR = 295.0;
     public static final double ARM_WRIST_GRAB_FROM_FEEDER = 1604.0;
 
     // Offsets
 
     public static final double ARM_WRIST_UPPER_OFFSET = 3649.0;
     public static final double ARM_WRIST_LOWER_OFFSET = 0.0;
-    public static final double ARM_WRIST_MAX_DISTANCE = 400;
+    public static final double ARM_WRIST_MAX_DISTANCE = 500;
     public static final double ARM_WRIST_ARRIVE_OFFSET = 100;
     public static final double ARM_WRIST_MAX_POWER = 0.75;
 

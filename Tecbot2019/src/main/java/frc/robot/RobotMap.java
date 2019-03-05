@@ -37,12 +37,12 @@ public class RobotMap {
 	public static MotorConfiguration chassis_typeOfMotor = MotorConfiguration.CAN;
 	public static ChassisConfiguration chassis_typeOfConfiguration = ChassisConfiguration.MOTORS_6;
 
-	public static int chassis_frontRightMotor = 2; // 2 Talon SRX PWM 4 Victor SPX 
+	public static int chassis_frontRightMotor = 2; // 2 Talon SRX PWM 4 Victor SPX
 	public static int chassis_frontLeftMotor = 1; // Talon SRX PWM 1 Victor 5
 	public static int chassis_rearRightMotor = 4;
 	public static int chassis_rearLeftMotor = 5;
-	public static int chassis_middleLeftMotor = 3;
-	public static int chassis_middleRightMotor = 20;
+	public static int chassis_middleLeftMotor = 3; // CAN
+	public static int chassis_middleRightMotor = 20; // CAN
 	public static int chassis_leftEncoder[] = { RobotConfigurator.CONFIG_NOT_SET, RobotConfigurator.CONFIG_NOT_SET };
 	public static int chassis_rightEncoder[] = { RobotConfigurator.CONFIG_NOT_SET, RobotConfigurator.CONFIG_NOT_SET };
 
@@ -55,19 +55,16 @@ public class RobotMap {
 	public static int chassis_leftEncoderSRX = 5;
 	public static int chassis_rightEncoderSRX = 1;
 
-
 	public static float straight_P = 1.3672f;
 	public static float straight_I = .3593f;
 	public static float straight_D = .0898f;
 	public static float straight_Tolerance = 10;
 
-
-/*
-public static float straight_P = 1.3672f;
-public static float straight_I = 0;
-public static float straight_D = 0 ;
-public static float straight_Tolerance = 10;
-*/
+	/*
+	 * public static float straight_P = 1.3672f; public static float straight_I = 0;
+	 * public static float straight_D = 0 ; public static float straight_Tolerance =
+	 * 10;
+	 */
 	// public static float straight_P = 1.58950784091104f;
 	// public static float straight_I = 16.1648949353988f;
 	// public static float straight_D = .02348467516511333f;
@@ -85,21 +82,27 @@ public static float straight_Tolerance = 10;
 	public static int k_tic_per_revolution = 30000;
 	public static float k_wheel_diameter = .2032f;
 
-	// Arm
+	// Arm CAN
 	public static final int ANGLER_MOTOR_PORT = 12;
-	//PWM Motor
+	// PWM Motor
 	public static final int ANGLER_MOTOR_PORT2 = 0;
-	public static final int ANGLER_LEFT_ENCODER_PORTS[] = {4, 5};
-	public static final int ANGLER_RIGHT_ENCODER_PORTS[] = {6, 7};
-	
+	public static final int ANGLER_LEFT_ENCODER_PORTS[] = { 4, 5 };
+	public static final int ANGLER_RIGHT_ENCODER_PORTS[] = { 6, 7 };
+
+	// CAN
 	public static final int EXTENSOR_LEFT_MOTOR_PORT = 6;
+	// PWM
 	public static final int EXTENSOR_RIGHT_MOTOR_PORT = 9;
 
-	public static final int EXTENSOR_LEFT_ENCODER_PORTS[] = {0, 1};
-	public static final int EXTENSOR_RIGHT_ENCODER_PORTS[] = {2, 3};
+	public static final int EXTENSOR_LEFT_ENCODER_PORTS[] = { 0, 1 };
+	public static final int EXTENSOR_RIGHT_ENCODER_PORTS[] = { 2, 3 };
 
 	public static final int WRIST_MOTOR_PORT = 7;
-	public static final int WRIST_ENCODER_PORTS[] = {8, 9};
+	public static final int WRIST_ENCODER_PORTS[] = { 8, 9 };
+
+	// PWM
+	public static int TITLT_MOTOR_1 = 6;
+	public static int TITLT_MOTOR_2 = 7;
 
 	// Rodillo Victor SPX 3
 
