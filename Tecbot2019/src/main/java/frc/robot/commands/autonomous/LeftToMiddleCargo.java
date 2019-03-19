@@ -10,6 +10,7 @@ package frc.robot.commands.autonomous;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.RobotMap;
 import frc.robot.commands.arm.wrist.MoveRoller;
+import frc.robot.commands.chassis.ChangeTransmission;
 import frc.robot.commands.chassis.MoveDistanceWithSpeedReduction;
 import frc.robot.commands.chassis.MoveForwardTimed;
 import frc.robot.commands.chassis.MoveStraightForwardOneEncoder;
@@ -22,14 +23,15 @@ public class LeftToMiddleCargo extends CommandGroup {
    */
   public LeftToMiddleCargo() {
     addSequential(new ResetGyro());
-    addSequential(new MoveStraightForwardOneEncoder(-3, 7.5f * RobotMap.k_meters_to_encoder));
-    addSequential(new TurnDegrees(90, 0.6));
-    addSequential(new MoveForwardTimed(1.3f, .5f));
-    addSequential(new MoveRoller(-1, .6f));
-    addSequential(new MoveDistanceWithSpeedReduction(-1, .75f));
-    addSequential(new TurnDegrees(-180, 0.6));
-    addSequential(new ResetGyro());
-    addSequential(new MoveStraightForwardOneEncoder(15, 6 * RobotMap.k_meters_to_encoder));
+    addSequential(new MoveStraightForwardOneEncoder(-10, 7.7f * RobotMap.k_meters_to_encoder));
+    addSequential(new TurnDegrees(90, 0.8));
+    addSequential(new MoveForwardTimed(3f, -.85f));
+    // addSequential(new MoveRoller(-1, .6f));
+    // addSequential(new MoveDistanceWithSpeedReduction(-1, .75f));
+    // addSequential(new TurnDegrees(-180, 0.6));
+    // addSequential(new ResetGyro());
+    // addSequential(new MoveStraightForwardOneEncoder(15, 6 *
+    // RobotMap.k_meters_to_encoder));
 
   }
 }

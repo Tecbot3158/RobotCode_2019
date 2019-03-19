@@ -136,6 +136,7 @@ public class Robot extends TimedRobot {
 		angler.resetEncoders();
 		leftEncoder.reset();
 		rightEncoder.reset();
+		driveTrain.transmissionOn();
 		m_autonomousCommand = m_chooser.getSelected();
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
@@ -158,6 +159,7 @@ public class Robot extends TimedRobot {
 			m_autonomousCommand.cancel();
 		}
 		extensor.setOnManualMovement(false);
+		driveTrain.transmissionOn();
 	}
 
 	@Override
@@ -181,6 +183,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("Extender Manual Movement", extensor.isOnManualMovement());
 		SmartDashboard.putBoolean("Extensor Arrived Remaster", extensor.hasArrivedToTarget());
 		SmartDashboard.putBoolean("Hatch Mode", wrist.getHatchBoolean());
+		SmartDashboard.putBoolean("Extensor is near", extensor.extensorNear());
 
 		if (oi.getPilot().getPOV() == 180) {
 			CommandHandler.goToState(CommandHandler.GRAB_CONFIGURATION);
@@ -206,6 +209,8 @@ public class Robot extends TimedRobot {
 		m_chooser.addOption("Left to middle cargo remastered", new LeftToMiddleCargo());
 		m_chooser.addOption("TwoCargoRight", new TwoCargoAutoRight());
 		m_chooser.addOption("TwoCargoLeft", new TwoCargoAutoLeft());
+		m_chooser.addOption("CenterToCargoLeft non tested", new CenterToLeftMiddleCargo());
+		m_chooser.addOption("CenterToRightCargoLeft non tested", new CenterToRightMiddleCargo());
 
 		SmartDashboard.putData("Auto mode", m_chooser);
 

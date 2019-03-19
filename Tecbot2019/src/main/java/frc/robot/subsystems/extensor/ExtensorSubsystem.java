@@ -134,7 +134,7 @@ public class ExtensorSubsystem extends Subsystem implements WatchableSubsystem {
 
   public void moveExtensorTeleoperated() {
     // double s = Robot.oi.getCopilotTriggers() * 10;
-    SmartDashboard.putNumber("POV", Robot.oi.getCopilot().getPOV());
+    SmartDashboard.putNumber("POV", Robot.oi.getPilot().getPOV());
     // s = (java.lang.Math.floor(s))/10;
     // leftMotor.set(s);
     // rightMotor.set(-s);
@@ -306,6 +306,12 @@ public class ExtensorSubsystem extends Subsystem implements WatchableSubsystem {
 
   public void keepOnTarget() {
     armExtensorMove(currentTarget, TecbotConstants.ARM_EXTENSOR_MAX_POWER);
+  }
+
+  public boolean extensorNear() {
+    if (encoder.getRaw() < -4000 && encoder.getRaw() > -12000)
+      return true;
+    return false;
   }
 
   @Override

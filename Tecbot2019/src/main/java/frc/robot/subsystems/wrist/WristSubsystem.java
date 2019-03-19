@@ -25,7 +25,7 @@ import frc.robot.subsystems.watcher.WatchableSubsystem;
 /**
  * Add your docs here.
  */
-public class WristSubsystem extends Subsystem implements WatchableSubsystem{
+public class WristSubsystem extends Subsystem implements WatchableSubsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
@@ -35,7 +35,7 @@ public class WristSubsystem extends Subsystem implements WatchableSubsystem{
   private DoubleSolenoid claw;
   private boolean hatch = false;
 
-  public WristSubsystem(){
+  public WristSubsystem() {
 
     // Motor
 
@@ -51,35 +51,34 @@ public class WristSubsystem extends Subsystem implements WatchableSubsystem{
 
   }
 
-  public void openClaw(){
+  public void openClaw() {
     claw.set(Value.kForward);
   }
 
-  public void closeClaw(){
+  public void closeClaw() {
     claw.set(Value.kReverse);
   }
 
-  public boolean armWristMove(double target, double maxPower){
+  public boolean armWristMove(double target, double maxPower) {
     maxPower = Math.clamp(maxPower, 0, 1);
 
     SmartDashboard.putNumber("Wrist Target", target);
 
-    target = Math.clamp(target, TecbotConstants.ARM_WRIST_LOWER_OFFSET,
-                              TecbotConstants.ARM_WRIST_UPPER_OFFSET);
-    
+    target = Math.clamp(target, TecbotConstants.ARM_WRIST_LOWER_OFFSET, TecbotConstants.ARM_WRIST_UPPER_OFFSET);
+
     SmartDashboard.putNumber("Wrist Clamped Target", target);
 
     double distance = getPosition() - target;
 
     SmartDashboard.putNumber("Wrist Distance", distance);
 
-    double power = Math.clamp(distance/TecbotConstants.ARM_WRIST_MAX_DISTANCE, -maxPower, maxPower);
+    double power = Math.clamp(distance / TecbotConstants.ARM_WRIST_MAX_DISTANCE, -maxPower, maxPower);
 
     SmartDashboard.putNumber("Wrist Power", power);
 
     double absDistance = Math.abs(distance);
 
-    if(absDistance >= TecbotConstants.ARM_WRIST_ARRIVE_OFFSET){
+    if (absDistance >= TecbotConstants.ARM_WRIST_ARRIVE_OFFSET) {
       motor.set(power);
     } else {
       motor.set(0);
@@ -95,17 +94,17 @@ public class WristSubsystem extends Subsystem implements WatchableSubsystem{
    * @param speed Roller speed
    */
 
-  public void rollerStart(double speed){
+  public void rollerStart(double speed) {
     double s = java.lang.Math.floor(speed * 10);
-    s = s/10;
+    s = s / 10;
     roller.set(s);
   }
 
-  public void changeHatchBoolean(){
+  public void changeHatchBoolean() {
     hatch = !hatch;
   }
-  
-  public boolean getHatchBoolean(){
+
+  public boolean getHatchBoolean() {
     return hatch;
   }
 
@@ -113,7 +112,7 @@ public class WristSubsystem extends Subsystem implements WatchableSubsystem{
    * Stops the roller
    */
 
-  public void stopRoller(){
+  public void stopRoller() {
     roller.set(0);
   }
 
@@ -121,37 +120,36 @@ public class WristSubsystem extends Subsystem implements WatchableSubsystem{
    * Move Wrist teleoperated, floor included :)
    */
 
-  public void moveWristTeleoperated(){
-    // if(Robot.oi.getPilot().getPOV() == 0){
-    //   motor.set(0.8);
-    // } else if(Robot.oi.getPilot().getPOV() == 180){
-    //   motor.set(-0.8);
-    // } else {
-    //   motor.set(0);
-    // }
-
-    if(Robot.oi.getCopilotLBIsActive()){
-      motor.set(0.6);
-    } else if(Robot.oi.getCopilotRBIsActive()){
+  public void moveWristTeleoperated() {
+    if (Robot.oi.getPilot().getPOV() == 0) {
       motor.set(-0.6);
-    } else if(!Robot.oi.getCopilotLBIsActive() && !Robot.oi.getCopilotRBIsActive() && Robot.oi.getPilot().getPOV() == -1){
+    } else if (Robot.oi.getPilot().getPOV() == 90) {
+      motor.set(0.6);
+    }
+
+    if (Robot.oi.getCopilotLBIsActive()) {
+      motor.set(0.6);
+    } else if (Robot.oi.getCopilotRBIsActive()) {
+      motor.set(-0.6);
+    } else if (!Robot.oi.getCopilotLBIsActive() && !Robot.oi.getCopilotRBIsActive()
+        && Robot.oi.getPilot().getPOV() == -1) {
       motor.set(0);
     }
 
-    if(Robot.oi.getCopilot().getPOV() == 0){
+    if (Robot.oi.getCopilot().getPOV() == 0) {
       Robot.extensor.resetEncoders();
-    } else if(Robot.oi.getCopilot().getPOV() == 90){
+    } else if (Robot.oi.getCopilot().getPOV() == 90) {
       Robot.angler.resetEncoders();
-    } else if(Robot.oi.getCopilot().getPOV() == 180){
+    } else if (Robot.oi.getCopilot().getPOV() == 180) {
       Robot.wrist.resetEncoder();
     }
   }
 
-  public void moveWristUp(){
+  public void moveWristUp() {
     motor.set(0.6);
   }
 
-  public void moveWristDown(){
+  public void moveWristDown() {
     motor.set(-0.6);
   }
 
@@ -159,11 +157,11 @@ public class WristSubsystem extends Subsystem implements WatchableSubsystem{
    * SmartDashboard print encoders
    */
 
-  public void printEncodersSmartDashboard(){
+  public void printEncodersSmartDashboard() {
     SmartDashboard.putNumber("Wrist Encoder", encoder.getRaw());
   }
 
-  public void resetEncoder(){
+  public void resetEncoder() {
     encoder.reset();
   }
 
@@ -172,7 +170,7 @@ public class WristSubsystem extends Subsystem implements WatchableSubsystem{
    */
 
   @Override
-  public void check(){
+  public void check() {
 
   }
 
@@ -181,7 +179,7 @@ public class WristSubsystem extends Subsystem implements WatchableSubsystem{
    */
 
   @Override
-  public void correct(){
+  public void correct() {
 
   }
 
@@ -190,7 +188,7 @@ public class WristSubsystem extends Subsystem implements WatchableSubsystem{
    */
 
   @Override
-  public void setGood(){
+  public void setGood() {
     this.state = State.GOOD;
   }
 
@@ -199,7 +197,7 @@ public class WristSubsystem extends Subsystem implements WatchableSubsystem{
    */
 
   @Override
-  public void setWarning(){
+  public void setWarning() {
     this.state = State.WARNING;
   }
 
@@ -208,7 +206,7 @@ public class WristSubsystem extends Subsystem implements WatchableSubsystem{
    */
 
   @Override
-  public void setDisabled(){
+  public void setDisabled() {
     this.state = State.DANGER;
   }
 
@@ -217,37 +215,38 @@ public class WristSubsystem extends Subsystem implements WatchableSubsystem{
    */
 
   @Override
-  public State getState(){
+  public State getState() {
     return state;
   }
 
-   /**
+  /**
    * Return the name of the subsystem
    */
 
   @Override
-  public String getSubsystemName(){
+  public String getSubsystemName() {
     return this.getName();
   }
-  
+
   /**
    * Full stop to the subsystem
    */
-  
-  public void stop(){
+
+  public void stop() {
     motor.set(0);
   }
 
-  public TecbotSpeedController getMotor(){
+  public TecbotSpeedController getMotor() {
     return motor;
   }
 
   /**
    * Gives you the raw position of the wrist encoder
+   * 
    * @return Raw position of the wrist encoder
    */
 
-  public double getPosition(){
+  public double getPosition() {
     return encoder.getRaw();
   }
 
@@ -259,4 +258,3 @@ public class WristSubsystem extends Subsystem implements WatchableSubsystem{
   }
 
 }
-

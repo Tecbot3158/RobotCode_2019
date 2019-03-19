@@ -462,6 +462,7 @@ public class DriveTrain extends Subsystem {
 	public void transmissionOff() {
 		transmission.set(DoubleSolenoid.Value.kReverse);
 		transmissionState = false;
+		System.out.print("off");
 	}
 
 	public void toggleTransmission() {

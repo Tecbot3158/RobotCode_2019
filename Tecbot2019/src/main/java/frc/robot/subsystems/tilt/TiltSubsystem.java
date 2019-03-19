@@ -29,8 +29,8 @@ public class TiltSubsystem extends Subsystem {
   }
 
   public void tiltTeleop() {
-    motor1.set(Robot.oi.getCopilotTriggers());
-    motor2.set(Robot.oi.getCopilotTriggers());
+    // motor1.set(Robot.oi.getCopilotTriggers());
+    // motor2.set(Robot.oi.getCopilotTriggers());
   }
 
   @Override

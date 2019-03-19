@@ -22,14 +22,15 @@ public class RightToMiddleCargoRemastered extends CommandGroup {
    */
   public RightToMiddleCargoRemastered() {
     addSequential(new ResetGyro());
-    addSequential(new MoveStraightForwardOneEncoder(1, 7.5f * RobotMap.k_meters_to_encoder));
-    addSequential(new TurnDegrees(-90, 0.6));
-    addSequential(new MoveForwardTimed(1.3f, .5f));
-    addSequential(new MoveRoller(-1, .6f));
-    addSequential(new MoveDistanceWithSpeedReduction(-1, .75f));
-    addSequential(new TurnDegrees(-180, 0.6));
-    addSequential(new ResetGyro());
-    addSequential(new MoveStraightForwardOneEncoder(-15, 6 * RobotMap.k_meters_to_encoder));
+    addSequential(new MoveStraightForwardOneEncoder(10, 7.7f * RobotMap.k_meters_to_encoder));
+    addSequential(new TurnDegrees(-90, 0.8));
+    addSequential(new MoveForwardTimed(3f, -.85f));
+    // addSequential(new MoveRoller(-1, .6f));
+    // addSequential(new MoveDistanceWithSpeedReduction(-1, .75f));
+    // addSequential(new TurnDegrees(-180, 0.6));
+    // addSequential(new ResetGyro());
+    // addSequential(new MoveStraightForwardOneEncoder(-15, 6 *
+    // RobotMap.k_meters_to_encoder));
 
   }
 }

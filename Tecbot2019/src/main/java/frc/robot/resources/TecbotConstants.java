@@ -56,10 +56,10 @@ public class TecbotConstants {
     public static final double ARM_ANGLER_DEPLOY_BALL_LOWER_ROCKET = 125627.0;
     public static final double ARM_ANGLER_DEPLOY_BALL_MIDDLE_ROCKET = -5501.0;
     public static final double ARM_ANGLER_DEPLOY_BALL_UPPER_ROCKET = -30000.0;
-    public static final double ARM_ANGLER_DEPLOY_HATCH_LOWER_ROCKET = 170039.0;
-    public static final double ARM_ANGLER_DEPLOY_HATCH_MIDDLE_ROCKET = -32458;
+    public static final double ARM_ANGLER_DEPLOY_HATCH_LOWER_ROCKET = 163710.0;
+    public static final double ARM_ANGLER_DEPLOY_HATCH_MIDDLE_ROCKET = -14406.0;
     public static final double ARM_ANGLER_DEPLOY_HATCH_UPPER_ROCKET = -58667.0;
-    public static final double ARM_ANGLER_GRAB_FROM_FLOOR = 210000.0;
+    public static final double ARM_ANGLER_GRAB_FROM_FLOOR = 190000.0;
     public static final double ARM_ANGLER_START_CONFIGURATION = 0.0;
     public static final double ARM_ANGLER_TRANSPORT = 0.0;
     public static final double ARM_ANGLER_GRAB_FROM_FEEDER = 53452.0;
@@ -83,18 +83,18 @@ public class TecbotConstants {
     // Positions
 
     public static final double ARM_WRIST_TRANSPORT = 0.0;
-    public static final double ARM_WRIST_DEPLOY_HATCH_LOWER_ROCKET = 3787.0;
+    public static final double ARM_WRIST_DEPLOY_HATCH_LOWER_ROCKET = 4040.0;
     public static final double ARM_WRIST_DEPLOY_BALL_LOWER_ROCKET = 1307.0;
 
     public static final double ARM_WRIST_DEPLOY_BALL_MIDDLE_ROCKET = 629.0;
-    public static final double ARM_WRIST_DEPLOY_HATCH_MIDDLE_ROCKET = 2408.0;
+    public static final double ARM_WRIST_DEPLOY_HATCH_MIDDLE_ROCKET = 2822.0;
 
     public static final double ARM_WRIST_DEPLOY_BALL_UPPER_ROCKET = 842.0;
-    public static final double ARM_WRIST_DEPLOY_HATCH_UPPER_ROCKET = 2162.0;
+    public static final double ARM_WRIST_DEPLOY_HATCH_UPPER_ROCKET = 2523.0;
 
     public static final double ARM_WRIST_BOTTOM_BALL_POSITION = 910.0;
     public static final double ARM_WRIST_BOTTOM_HATCH_POSITION = 2575.0;
-    public static final double ARM_WRIST_GRAB_BALL_FLOOR = 295.0;
+    public static final double ARM_WRIST_GRAB_BALL_FLOOR = 64.0;
     public static final double ARM_WRIST_GRAB_FROM_FEEDER = 1604.0;
 
     // Offsets
@@ -107,8 +107,8 @@ public class TecbotConstants {
 
     public static final double DEFAULT_MOTOR_MAX_POWER = 1;
 
-    public static final double CHASSIS_TURN_MAX_DISTANCE = 9;
-    public static final double CHASSIS_TURN_ARRIVE_OFFSET = 3;
+    public static final double CHASSIS_TURN_MAX_DISTANCE = 12;
+    public static final double CHASSIS_TURN_ARRIVE_OFFSET = 6;
 
     public static final double ARM_ANGLER_HATCH1_PERCENTAGE = 0.15;
     public static final double ARM_ANGLER_HATCH2_PERCENTAGE = 0.35;
@@ -151,8 +151,8 @@ public class TecbotConstants {
     public static float TURNING_P = 1.58950784091104f;
     public static float TURNING_I = 16.1648949353988f;
     public static float TURNING_D = .02348467516511333f;
-    public static float TURNING_TOLERANCE = 5;
-    public static float TURNING_START_REDUCING_SPEED_POINT = 20;
+    public static float TURNING_TOLERANCE = 8;
+    public static float TURNING_START_REDUCING_SPEED_POINT = 16;
 
     // The equivalence between meters to encoder count
     // Meter * meters_to_encoder = encoder count
