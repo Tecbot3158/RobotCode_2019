@@ -52,8 +52,8 @@ public class RobotMap {
 	 * TALON SRX ENCODERS ON CHASSIS If there is no SRX encoder, this HAS to be -1,
 	 * BOTH!
 	 */
-	public static int chassis_leftEncoderSRX = 5;
-	public static int chassis_rightEncoderSRX = 1;
+	public static int chassis_leftEncoderSRX = 3;
+	public static int chassis_rightEncoderSRX = 20;
 
 	public static float straight_P = 1.3672f;
 	public static float straight_I = .3593f;
@@ -85,14 +85,14 @@ public class RobotMap {
 	// Arm CAN
 	public static final int ANGLER_MOTOR_PORT = 12;
 	// PWM Motor
-	public static final int ANGLER_MOTOR_PORT2 = 0;
+	public static final int ANGLER_MOTOR_PORT2 = 3;
 	public static final int ANGLER_LEFT_ENCODER_PORTS[] = { 4, 5 };
 	public static final int ANGLER_RIGHT_ENCODER_PORTS[] = { 6, 7 };
 
 	// CAN
 	public static final int EXTENSOR_LEFT_MOTOR_PORT = 6;
 	// PWM
-	public static final int EXTENSOR_RIGHT_MOTOR_PORT = 9;
+	public static final int EXTENSOR_RIGHT_MOTOR_PORT = 8;
 
 	public static final int EXTENSOR_LEFT_ENCODER_PORTS[] = { 0, 1 };
 	public static final int EXTENSOR_RIGHT_ENCODER_PORTS[] = { 2, 3 };
@@ -106,7 +106,7 @@ public class RobotMap {
 
 	// Rodillo Victor SPX 3
 
-	public static final int ROLLER_MOTOR_PORT = 3;
+	public static final int ROLLER_MOTOR_PORT = 0;
 
 	// Claw
 	public static final int CLAWMOTOR = 6;

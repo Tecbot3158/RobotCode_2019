@@ -33,7 +33,7 @@ public class DriveTrain extends Subsystem {
 	Command defaultCommand;
 	boolean transmissionStatus = false;
 
-	public enum Side{
+	public enum Side {
 		RIGHT, LEFT;
 	}
 
@@ -436,9 +436,10 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void drive() {
-		drive(Robot.oi.getPilot().getRawAxis(1), -Robot.oi.getPilot().getRawAxis(0));
+		drive(Robot.oi.getPilot().getRawAxis(1) + Robot.oi.getThird().getRawAxis(1),
+				-(Robot.oi.getPilot().getRawAxis(0) + Robot.oi.getThird().getRawAxis(0)));
 		// drive(Math.max(Robot.oi.getPilot().getY(), Robot.oi.getCopilot().getY()),
-		// Math.max((Robot.oi.getPilot().getX()), Robot.oi.getCopilot().getX()))
+		// Math.max((Robot.oi.getPilot().getX()), Robot.oi.getCopilot().getX())))
 		SmartDashboard.putNumber("Navx", Robot.tecbotgyro.getYaw());
 	}
 

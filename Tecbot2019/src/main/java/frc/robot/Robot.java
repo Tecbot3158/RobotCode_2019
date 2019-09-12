@@ -165,13 +165,15 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 
+		System.out.print(oi.getPilot().getRawAxis(2));
+
 		wrist.getMotor().getTalonSRX().getFaults(_faults_wrist);
 		angler.getLeftMotor().getTalonSRX().getFaults(_faults_angler);
 		extensor.getLeftMotor().getTalonSRX().getFaults(_faults_extensor);
 
 		Scheduler.getInstance().run();
 		tecbotgyro.run();
-		SmartDashboard.putNumber("Get Triggers ", oi.getCopilotTriggers());
+		SmartDashboard.putNumber("Get Triggers ", oi.getPilotTriggers());
 		angler.printEncodersSmartDashboard();
 		extensor.printEncodersSmartDashboard();
 		wrist.printEncodersSmartDashboard();
@@ -186,10 +188,10 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("Extensor is near", extensor.extensorNear());
 
 		if (oi.getPilot().getPOV() == 180) {
-			CommandHandler.goToState(CommandHandler.GRAB_CONFIGURATION);
+			// CommandHandler.goToState(CommandHandler.GRAB_CONFIGURATION);
 		}
 		if (oi.getPilot().getPOV() == 270) {
-			CommandHandler.goToState(CommandHandler.FEEDER_CONFIGURATION);
+			// CommandHandler.goToState(CommandHandler.FEEDER_CONFIGURATION);
 		}
 		if (oi.getPilot().getRawButton(12)) {
 			new CancelCommands().start();

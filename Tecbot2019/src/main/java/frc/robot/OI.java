@@ -59,7 +59,7 @@ public class OI {
 
 	public boolean ps4 = RobotMap.isUsingPS4Controller;
 
-	public Joystick pilot, copilot, tester;
+	public Joystick pilot, copilot, tester, third;
 
 	public JoystickButton start, back, a, b, x, y, rt, lt, rb, lb, select, ls, rs, middleButton;
 
@@ -72,6 +72,8 @@ public class OI {
 	public OI() {
 
 		pilot = new Joystick(0);
+
+		third = new Joystick(3);
 
 		// Xbox
 
@@ -116,17 +118,19 @@ public class OI {
 		middleButton = new JoystickButton(pilot, 13);
 
 		// start.whenPressed(new GoStartingConfiguration(true));
-
-		// start.whenPressed(new GoTransportConfiguration());
-		start.whenPressed(new CommandHandlerStateModify(CommandHandler.STARTING_CONFIGURATION));
-		// a.whenPressed(new DeployBallLowerRocket());
-		a.whenPressed(new CommandHandlerStateModify(CommandHandler.BOTTOM_CONFIGURATION));
-		// b.whenPressed(new DeployBallMiddleRocket());
-		b.whenPressed(new CommandHandlerStateModify(CommandHandler.MIDDLE_CONFIGURATION));
-		// y.whenPressed(new DeployBallHigherRocket());
-		y.whenPressed(new CommandHandlerStateModify(CommandHandler.TOP_CONFIGURATION));
-
-		x.whenPressed(new ChangeHatchBoolean());
+		/*
+		 * // start.whenPressed(new GoTransportConfiguration()); start.whenPressed(new
+		 * CommandHandlerStateModify(CommandHandler.STARTING_CONFIGURATION)); //
+		 * a.whenPressed(new DeployBallLowerRocket()); a.whenPressed(new
+		 * CommandHandlerStateModify(CommandHandler.BOTTOM_CONFIGURATION)); //
+		 * b.whenPressed(new DeployBallMiddleRocket()); b.whenPressed(new
+		 * CommandHandlerStateModify(CommandHandler.MIDDLE_CONFIGURATION)); //
+		 * y.whenPressed(new DeployBallHigherRocket()); y.whenPressed(new
+		 * CommandHandlerStateModify(CommandHandler.TOP_CONFIGURATION));
+		 * 
+		 * x.whenPressed(new ChangeHatchBoolean());
+		 */
+		// TODO quitar el comentario para que jalen los comandos automaticos
 
 		lb.whenPressed(new OpenClaw());
 
@@ -279,6 +283,10 @@ public class OI {
 
 	}
 
+	public Joystick getThird() {
+		return third;
+	}
+
 	public double getPilotRightStickX() {
 
 		if (ps4) {
@@ -336,8 +344,8 @@ public class OI {
 	}
 
 	public double getPilotTriggers() {
-
-		return -(pilot.getRawAxis(3) + 1) / 2 + (pilot.getRawAxis(4) + 1) / 2;
+		// Xbox Controller
+		return -(pilot.getRawAxis(3) + 1) / 2 + (pilot.getRawAxis(2) + 1) / 2;
 
 	}
 
