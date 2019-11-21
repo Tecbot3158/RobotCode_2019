@@ -7,8 +7,11 @@
 
 package frc.robot.subsystems.wrist;
 
+import javax.lang.model.util.ElementScanner6;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.resources.RobotConfigurator;
@@ -123,8 +126,16 @@ public class WristSubsystem extends Subsystem implements WatchableSubsystem {
   public void moveWristTeleoperated() {
     if (Robot.oi.getPilot().getPOV() == 0) {
       motor.set(-0.6);
+      Robot.oi.getPilot().setRumble(RumbleType.kLeftRumble, 1);
+      Robot.oi.getPilot().setRumble(RumbleType.kRightRumble, 1);
     } else if (Robot.oi.getPilot().getPOV() == 90) {
       motor.set(0.6);
+      Robot.oi.getPilot().setRumble(RumbleType.kLeftRumble, 1);
+      Robot.oi.getPilot().setRumble(RumbleType.kRightRumble, 1);
+    } else {
+      Robot.oi.getPilot().setRumble(RumbleType.kRightRumble, 0);
+      Robot.oi.getPilot().setRumble(RumbleType.kLeftRumble, 0);
+
     }
 
     if (Robot.oi.getCopilotLBIsActive()) {

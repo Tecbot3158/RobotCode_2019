@@ -98,6 +98,8 @@ public class AnglerSubsystem extends Subsystem implements WatchableSubsystem {
     target = t;
     maxPower = Math.clamp(maxPower, 0, 1);
 
+    System.out.print("Estas bien pendejo");
+
     SmartDashboard.putNumber("Arm Target", target);
 
     target = Math.clamp(target, TecbotConstants.ARM_ANGLER_LEFT_LOWER_OFFSET,
@@ -181,13 +183,23 @@ public class AnglerSubsystem extends Subsystem implements WatchableSubsystem {
     // if(Robot.oi.getCopilot().getRawAxis(1) > 0.1 ||
     // Robot.oi.getCopilot().getRawAxis(1) < -0.1){
 
-    double s = Math.deadZone(Robot.oi.getCopilot().getRawAxis(1), 0.2);
-    if (Robot.oi.pilot.getRawAxis(4) > .8)
-      s = .6;
-    if (Robot.oi.pilot.getRawAxis(4) < -.8)
-      s = -.6;
+    double s = Math.deadZone(Robot.oi.getPilot().getRawAxis(4), 0.2);
+    if (Robot.oi.pilot.getRawAxis(4) > .5) {
+      Robot.oi.getPilot().setRumble(RumbleType.kRightRumble, 1);
+      Robot.oi.getPilot().setRumble(RumbleType.kLeftRumble, 1);
+      s = .8;
+    } else if (Robot.oi.pilot.getRawAxis(4) < -.5) {
+      s = -.8;
+      Robot.oi.getPilot().setRumble(RumbleType.kRightRumble, 1);
+      Robot.oi.getPilot().setRumble(RumbleType.kLeftRumble, 1);
+    } else {
+      Robot.oi.getPilot().setRumble(RumbleType.kRightRumble, 0);
+      Robot.oi.getPilot().setRumble(RumbleType.kLeftRumble, 0);
+    }
+    if(Robot.fullThird) s = Robot.oi.getThird().getRawAxis(4);
     setMotorPower(s);
     SmartDashboard.putNumber("angler power", s);
+    System.out.println(s);
 
   }
 

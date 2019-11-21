@@ -52,6 +52,10 @@ public class Robot extends TimedRobot {
 	public static WristSubsystem wrist;
 	public static TiltSubsystem tilt;
 	public static Command actualCommand;
+
+	public static boolean fullThird = false;
+	public static int sequence = 0;
+
 	DoubleSolenoid a, b;
 
 	public Faults _faults_wrist, _faults_angler, _faults_extensor;
@@ -121,13 +125,15 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledInit() {
-		Robot.oi.getCopilot().setRumble(RumbleType.kRightRumble, 0);
-		Robot.oi.getCopilot().setRumble(RumbleType.kLeftRumble, 0);
+		Robot.oi.getPilot().setRumble(RumbleType.kRightRumble, 0);
+		Robot.oi.getPilot().setRumble(RumbleType.kLeftRumble, 0);
 		new CancelCommands().start();
 	}
 
 	@Override
 	public void disabledPeriodic() {
+		Robot.oi.getCopilot().setRumble(RumbleType.kRightRumble, 0);
+		Robot.oi.getCopilot().setRumble(RumbleType.kLeftRumble, 0);
 	}
 
 	@Override
@@ -193,7 +199,7 @@ public class Robot extends TimedRobot {
 		if (oi.getPilot().getPOV() == 270) {
 			// CommandHandler.goToState(CommandHandler.FEEDER_CONFIGURATION);
 		}
-		if (oi.getPilot().getRawButton(12)) {
+		if (oi.getPilot().getRawButton(1)) {
 			new CancelCommands().start();
 		}
 

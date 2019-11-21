@@ -153,6 +153,13 @@ public class ExtensorSubsystem extends Subsystem implements WatchableSubsystem {
     double s = Robot.oi.getPilotTriggers();
     leftMotor.set(-s);
     rightMotor.set(s);
+    if (s > .2) {
+      Robot.oi.getPilot().setRumble(RumbleType.kRightRumble, 1);
+      Robot.oi.getPilot().setRumble(RumbleType.kLeftRumble, 1);
+    }else{
+      Robot.oi.getPilot().setRumble(RumbleType.kRightRumble, 0);
+      Robot.oi.getPilot().setRumble(RumbleType.kLeftRumble, 0);
+    }
     if (encoder.getRaw() > TecbotConstants.RUMBLE_EXTENDER_ENCODER_VALUE) {
     }
     // Robot.oi.getCopilot().setRumble(RumbleType.kRightRumble, 1);

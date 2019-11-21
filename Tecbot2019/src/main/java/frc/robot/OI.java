@@ -51,12 +51,6 @@ import frc.robot.resources.TecbotConstants;
 
 public class OI {
 
-	/**
-	 * TODO extensor a los triggers ^/ Rollers a eje x de derecha Solo cuando sea
-	 * mayor a .8 ^/ Angler a eje y derecha Solo cuando sea mayor a .8 y solo se
-	 * prende en .6 ^/ Quitar extensor de los automaticos
-	 */
-
 	public boolean ps4 = RobotMap.isUsingPS4Controller;
 
 	public Joystick pilot, copilot, tester, third;
@@ -345,7 +339,9 @@ public class OI {
 
 	public double getPilotTriggers() {
 		// Xbox Controller
-		return -(pilot.getRawAxis(3) + 1) / 2 + (pilot.getRawAxis(2) + 1) / 2;
+		return (pilot.getRawAxis(3) + 1) / 2 - (pilot.getRawAxis(2) + 1) / 2;
+		// Ps4
+		// return -pilot.getRawAxis(3) + pilot.getRawAxis(4);
 
 	}
 

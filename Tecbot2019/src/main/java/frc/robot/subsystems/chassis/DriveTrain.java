@@ -436,8 +436,11 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void drive() {
-		drive(Robot.oi.getPilot().getRawAxis(1) + Robot.oi.getThird().getRawAxis(1),
-				-(Robot.oi.getPilot().getRawAxis(0) + Robot.oi.getThird().getRawAxis(0)));
+		double thirdX = (Robot.fullThird) ? Robot.oi.getThird().getRawAxis(0) : Robot.oi.getThird().getRawAxis(0) *.5f;
+		double thirdY = (Robot.fullThird) ? Robot.oi.getThird().getRawAxis(1) : Robot.oi.getThird().getRawAxis(1) *.75f;
+
+		drive(Robot.oi.getPilot().getRawAxis(1) + thirdY,
+				-(Robot.oi.getPilot().getRawAxis(0) + thirdX));
 		// drive(Math.max(Robot.oi.getPilot().getY(), Robot.oi.getCopilot().getY()),
 		// Math.max((Robot.oi.getPilot().getX()), Robot.oi.getCopilot().getX())))
 		SmartDashboard.putNumber("Navx", Robot.tecbotgyro.getYaw());

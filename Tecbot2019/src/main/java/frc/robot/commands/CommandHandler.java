@@ -79,20 +79,15 @@ public class CommandHandler {
     }
 
     public static void goToState(int state) {
-        int piece = CARGO;
-        if (Robot.angler.getHatchBoolean()) {
-            piece = HATCH;
-        }
-
-        if (states[state][piece] < states[actualState][actualPiece]) {
-            commands[state][UP].start();
-            currentCommand = commands[state][UP];
-        } else {
-            commands[state][DOWN].start();
-            currentCommand = commands[state][DOWN];
-        }
-        actualState = state;
-        actualPiece = piece;
+        /*
+         * int piece = CARGO; if (Robot.angler.getHatchBoolean()) { piece = HATCH; }
+         * 
+         * if (states[state][piece] < states[actualState][actualPiece]) {
+         * commands[state][UP].start(); currentCommand = commands[state][UP]; } else {
+         * commands[state][DOWN].start(); currentCommand = commands[state][DOWN]; }
+         * actualState = state; actualPiece = piece;
+         */
+        // TODO remove this comment
     }
 
     public static void cancelCommand() {
